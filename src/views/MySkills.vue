@@ -1,20 +1,24 @@
 <template lang="pug">
-    page-slide
-        section.skills
-            h1.title My skills
-            .skill-container
-                dynamic-image-shadow(
-                    v-for="(skill, index) in skills"
-                    :containerClasses="['skill-icon']"
-                    :src="skill.logo"
-                    :alt="skill.name"
-                    :key="index"
-                )
+    section-container
+        section-card
+            section.skills
+                h1.title My skills
+                .skill-container
+                    .skill(v-for="(skill, index) in skills")
+                        dynamic-image-shadow(
+                            :containerClasses="['skill-icon']"
+                            :src="skill.logo"
+                            :alt="skill.name"
+                            :key="index"
+                        )
+                        h3.skill-name {{ skill.name }}
+                        span.skill-experience {{ skill.experience }} years of experience
 </template>
 
 <script>
 import { Component, Vue } from 'vue-property-decorator'
-import PageSlide from '@/components/PageSlide.vue'
+import SectionContainer from '@/components/SectionContainer.vue'
+import SectionCard from '@/components/SectionCard.vue'
 import DynamicImageShadow from '@/components/DynamicImageShadow.vue'
 import { mapGetters } from 'vuex'
 
@@ -22,8 +26,9 @@ import { mapGetters } from 'vuex'
     name: 'MySkills',
     computed: mapGetters(['skills']),
     components: {
-        DynamicImageShadow,
-        PageSlide
+        SectionContainer,
+        SectionCard,
+        DynamicImageShadow
     }
 })
 export default class MySkills extends Vue {
@@ -43,13 +48,25 @@ export default class MySkills extends Vue {
         display: flex;
         width: 100%;
         flex-wrap: wrap;
-        align-items: center;
 
-        .skill-icon {
-            display: inline-block;
-            width: 120px;
-            height: 180px;
-            margin: 16px;
+        .skill {
+            margin-bottom: 64px;
+            flex-basis: 25%;
+            text-align: center;
+
+            .skill-icon {
+                width: 120px;
+                height: 120px;
+            }
+
+            .skill-name {
+                margin-top: 42px;
+                margin-bottom: 0;
+            }
+
+            .skill-experience {
+                font-size: 18px;
+            }
         }
     }
 }

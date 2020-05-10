@@ -1,7 +1,7 @@
 <template lang="pug">
     .image-container(:class="containerClasses")
-        img.image.shadow(:src="src" :style="style" :class="imageClasses")
-        img.image(:src="src" :class="imageClasses" :alt="alt")
+        img.image.shadow(:src="src" :style="{...style, ...shadowStyle}" :class="imageClasses")
+        img.image(:src="src" :style="style" :class="imageClasses" :alt="alt")
 </template>
 
 <script lang="ts">
@@ -26,6 +26,11 @@ export default class DynamicImageShadow extends Vue {
     })
     readonly blurAmount!: string;
 
+    @Prop({
+        default: '0px'
+    })
+    readonly borderRadius!: string;
+
     @Prop()
     readonly containerClasses!: string[];
 
@@ -35,7 +40,13 @@ export default class DynamicImageShadow extends Vue {
     @Prop()
     readonly alt!: string;
 
-    get style (): {marginTop: string, filter: string} {
+    get style (): {borderRadius: string} {
+        return {
+            borderRadius: this.borderRadius
+        }
+    }
+
+    get shadowStyle (): {marginTop: string, filter: string} {
         return {
             marginTop: this.shift,
             filter: `blur(${this.blurAmount})`
@@ -51,7 +62,6 @@ export default class DynamicImageShadow extends Vue {
     .image {
         position: absolute;
         width: 100%;
-        border-radius: 25px;
     }
 }
 </style>

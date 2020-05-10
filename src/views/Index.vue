@@ -1,26 +1,36 @@
 <template lang="pug">
-    page-slide
+    section-container
         section.index
-            .container-text
-                h1.title Hi, I'm Max
-                p.paragraph
-                    | I'm a web developer from Saint Petersburg, Russia.
-                    br
-                    | And this is my personal page. Welcome.
-            img.logo(src="../assets/avatar.svg")
+            h1.title Hi, I'm Max
+            dynamic-image-shadow(
+                :src="require('@/assets/photo.png')"
+                borderRadius="25px"
+                :containerClasses="['photo']"
+                key="photo"
+            )
+            p.paragraph
+                | I'm a web developer from Saint Petersburg, Russia.
+            p.paragraph
+                | I'm interested in backend development predominantly, but frontend is an exciting part
+                | of web to work with too. I have about 1 year of experience in backend and slightly less
+                | in frontend. Although my experience is pretty brief, I'm still young and furthermore
+                | I'm enthusiastic about the things I do and am full of ambitions to create something great.
+                | I also have a few pet projects which you can take a look at below.
         .scroll-down-pointer
             span.scroll-down-text Scroll down
             .scroll-down-arrow
 </template>
 
-<script>
+<script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import PageSlide from '@/components/PageSlide'
+import SectionContainer from '@/components/SectionContainer.vue'
+import DynamicImageShadow from '@/components/DynamicImageShadow.vue'
 
 @Component({
     name: 'Index',
     components: {
-        PageSlide
+        SectionContainer,
+        DynamicImageShadow
     }
 })
 export default class Index extends Vue {
@@ -29,28 +39,32 @@ export default class Index extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.index {
+.section-container {
     display: flex;
-    height: 100%;
+    height: calc(100vh - 96px);
     align-items: center;
+}
 
-    .container-text {
+.index {
+    height: 500px;
+    align-items: center;
+    color: #c1ffec;
+
+    .title {
         display: inline-block;
-        text-align: unset;
-        flex-basis: 62%;
-
-        .title {
-            margin-top: 0;
-            margin-bottom: 32px;
-            font-size: 128px;
-        }
+        margin-top: 0;
+        margin-bottom: 32px;
+        font-size: 120px;
     }
 
-    .logo {
-        flex-basis: 32%;
+    .photo {
+        float: right;
+        margin-left: 64px;
+        width: 32%;
+        height: 100%;
     }
 
-    .container-text, .logo {
+    .container-text, .photo {
         flex-shrink: 1;
         flex-grow: 1;
     }

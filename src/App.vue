@@ -1,86 +1,31 @@
 <template lang="pug">
-    #app(v-touch:swipe="handleSwipe")
-        dot-indicator
-        transition(
-            name="slide"
-            :duration="{leave: 500, enter: 500}"
-            @before-leave="handleTransitionLeave"
-            @before-enter="handleTransitionEnter"
-            @after-enter="handleTransitionDone"
-        )
-            router-view
+    #app
+        page-header
+        index
+        a(name="skills")
+        my-skills
+        a(name="projects")
+        my-projects
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import DotIndicator from '@/components/DotIndicator.vue'
+import PageHeader from '@/components/Header.vue'
+import Index from '@/views/Index.vue'
+import MySkills from '@/views/MySkills.vue'
+import MyProjects from '@/views/MyProjects.vue'
 
 @Component({
     name: 'App',
     components: {
-        DotIndicator
+        PageHeader,
+        Index,
+        MyProjects,
+        MySkills
     }
 })
 export default class App extends Vue {
-    canScroll: boolean = true;
 
-    handleTransitionLeave (leavingElement: HTMLElement) {
-        if (this.$store.getters.scrollDirection === 'top') {
-            leavingElement.classList.add('next');
-        } else if (this.$store.getters.scrollDirection === 'bottom') {
-            leavingElement.classList.add('prev');
-        } else if (this.$store.getters.scrollDirection === 'none') {
-            leavingElement.classList.add('none');
-        }
-    }
-
-    handleTransitionEnter (enteringElement: HTMLElement) {
-        if (this.$store.getters.scrollDirection === 'top') {
-            enteringElement.classList.add('next');
-        } else if (this.$store.getters.scrollDirection === 'bottom') {
-            enteringElement.classList.add('prev');
-        } else if (this.$store.getters.scrollDirection === 'none') {
-            enteringElement.classList.add('none');
-        }
-    }
-
-    handleTransitionDone (enteringElement: HTMLElement) {
-        this.$store.dispatch('resetTransitionParams');
-        enteringElement.classList.remove('next', 'prev', 'none');
-    }
-
-    handleWheel (event: WheelEvent) {
-        if (this.canScroll) {
-            this.canScroll = false;
-            setTimeout(() => {this.canScroll = true}, 1000);
-
-            if (event.deltaY > 0) {
-                this.$store.dispatch('setScrollDirection', 'top');
-                this.$route.meta.nextRoute && this.$router.push(this.$route.meta.nextRoute);
-            } else {
-                this.$store.dispatch('setScrollDirection', 'bottom');
-                this.$route.meta.previousRoute && this.$router.push(this.$route.meta.previousRoute);
-            }
-        }
-    }
-
-    handleSwipe (direction: string) {
-        if (direction === 'top') {
-            this.$store.dispatch('setScrollDirection', 'top');
-            this.$route.meta.nextRoute && this.$router.push(this.$route.meta.nextRoute);
-        } else if (direction === 'bottom') {
-            this.$store.dispatch('setScrollDirection', 'bottom');
-            this.$route.meta.previousRoute && this.$router.push(this.$route.meta.previousRoute);
-        }
-    }
-
-    mounted () {
-        window.addEventListener('wheel', this.handleWheel);
-    }
-
-    beforeUnmount () {
-        window.removeEventListener('wheel', this.handleWheel);
-    }
 }
 </script>
 
@@ -94,23 +39,24 @@ html {
 body {
     margin: 0;
     width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 #app {
-    position: relative;
     width: 100%;
-    height: 100%;
     font-family: 'Source Sans Pro', -apple-system, Arial, sans-serif;
     font-size: 24px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #c1ffec;
-    background: radial-gradient(#50af99, #4a97ab);
+    color: #3a8a71;
+    background: linear-gradient(to right, #4a97ab, #50af99, #4a97ab);
 
     h1, h2, h3, h4, h5, h6 {
         font-family: 'Nevis', sans-serif;
+    }
+
+    .paragraph {
+        text-align: justify;
     }
 
     @media screen and (max-width: 1199px) {
