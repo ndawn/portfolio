@@ -43,6 +43,7 @@ body {
 }
 
 #app {
+    position: relative;
     width: 100%;
     font-family: 'Source Sans Pro', -apple-system, Arial, sans-serif;
     font-size: 24px;
@@ -57,6 +58,11 @@ body {
 
     .paragraph {
         text-align: justify;
+    }
+
+    .header {
+        position: absolute;
+        z-index: 1;
     }
 
     @media screen and (max-width: 1199px) {
@@ -86,6 +92,20 @@ body {
 
     .slide-leave-to.next, .slide-enter.prev {
         transform: translateY(-100vh);
+    }
+}
+
+@media screen and (max-width: 959px) {
+    #app {
+        .header {
+            .section-container {
+                display: none;
+            }
+
+            .mobile {
+                display: flex;
+            }
+        }
     }
 }
 </style>

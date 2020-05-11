@@ -12,7 +12,7 @@
                             a.project-url(:href="`https://${project.url}`" target="_blank") {{ project.url }}
                     .column-right
                         .project-techs
-                            skill-badge(v-for="tech in project.tech" :text="tech")
+                            skill-badge(v-for="tech in project.tech" :text="tech" :key="tech")
                         dynamic-image-shadow(
                             :src="project.screenshot"
                             shift="16px"
@@ -57,14 +57,24 @@ export default class MyProjects extends Vue {}
         display: flex;
         margin-bottom: 64px;
         width: 100%;
-        min-height: 350px;
         align-items: stretch;
         justify-content: space-between;
+        flex-wrap: wrap;
 
         .column-left, .column-right {
             flex-basis: 46%;
             flex-shrink: 0;
             flex-grow: 0;
+        }
+
+        .column-left {
+            margin-right: 16px;
+        }
+
+        .column-right {
+            display: flex;
+            flex-direction: column;
+            margin-left: 16px;
         }
 
         .project-logo {
@@ -95,24 +105,48 @@ export default class MyProjects extends Vue {}
     }
 }
 
-@media screen and (max-width: 779px) {
-    .project {
-        .logo {
-            width: 100%;
-            height: 48px;
-            object-fit: contain;
+@media screen and (max-width: 1199px) {
+    .projects {
+        .title {
+            font-size: 72px;
         }
+    }
+}
 
+@media screen and (max-width: 779px) {
+    .projects {
         .title {
             font-size: 48px;
+            text-align: center;
         }
 
-        .paragraph {
-            font-size: 14px;
-        }
+        .project {
+            .column-left, .column-right {
+                margin: 0;
+                flex-basis: 100%;
+            }
 
-        .container-photo {
-            display: none;
+            .column-right {
+                flex-direction: column-reverse;
+            }
+
+            .logo {
+                width: 100%;
+                height: 48px;
+                object-fit: contain;
+            }
+
+            .title {
+                font-size: 48px;
+            }
+
+            .paragraph {
+                font-size: 14px;
+            }
+
+            .container-photo {
+                margin-bottom: 32px;
+            }
         }
     }
 }

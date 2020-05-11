@@ -12,7 +12,7 @@
                             :key="index"
                         )
                         h3.skill-name {{ skill.name }}
-                        span.skill-experience {{ skill.experience }} years of experience
+                        span.skill-experience {{ skill.experience }} years of usage
 </template>
 
 <script>
@@ -48,13 +48,18 @@ export default class MySkills extends Vue {
         display: flex;
         width: 100%;
         flex-wrap: wrap;
+        justify-content: space-around;
 
         .skill {
             margin-bottom: 64px;
+            padding: 32px;
             flex-basis: 25%;
+            flex-shrink: 0;
+            box-sizing: border-box;
             text-align: center;
 
             .skill-icon {
+                margin: auto;
                 width: 120px;
                 height: 120px;
             }
@@ -80,9 +85,35 @@ export default class MySkills extends Vue {
 }
 
 @media screen and (max-width: 779px) {
+    .section-container {
+        .card {
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+        }
+    }
+
     .skills {
         .title {
             font-size: 48px;
+            text-align: center;
+        }
+
+        .skill-container {
+            .skill {
+                padding: 16px;
+
+                .skill-icon {
+                    width: 80px;
+                }
+
+                .skill-name {
+                    font-size: 16px;
+                }
+
+                .skill-experience {
+                    font-size: 12px;
+                }
+            }
         }
     }
 }

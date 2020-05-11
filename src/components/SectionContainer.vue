@@ -23,7 +23,7 @@ export default class PageSlide extends Vue {}
 
 @media screen and (max-width: 779px) {
     .section-container {
-        padding: 24px;
+        padding: 0;
     }
 }
 </style>

@@ -1,7 +1,7 @@
 <template lang="pug">
-    .image-container(:class="containerClasses")
+    .image-container(:class="containerClasses" :style="{height: containerHeight}")
         img.image.shadow(:src="src" :style="{...style, ...shadowStyle}" :class="imageClasses")
-        img.image(:src="src" :style="style" :class="imageClasses" :alt="alt")
+        img.image(:src="src" :style="style" :class="imageClasses" :alt="alt" :ref="'img' + src")
 </template>
 
 <script lang="ts">
@@ -40,6 +40,8 @@ export default class DynamicImageShadow extends Vue {
     @Prop()
     readonly alt!: string;
 
+    containerHeight: string = '0px';
+
     get style (): {borderRadius: string} {
         return {
             borderRadius: this.borderRadius
@@ -52,6 +54,28 @@ export default class DynamicImageShadow extends Vue {
             filter: `blur(${this.blurAmount})`
         }
     }
+
+    computeContainerHeight () {
+        this.containerHeight = `${(this.$refs['img' + this.src] as HTMLElement)?.getBoundingClientRect()?.height || 0}px`;
+    }
+
+    mounted () {
+        setTimeout(this.computeContainerHeight, 200);
+
+        window.addEventListener('resize', (event: Event) => {
+            this.$forceUpdate();
+        });
+    }
+
+    updated () {
+        this.computeContainerHeight();
+    }
+
+    beforeDestroy () {
+        window.removeEventListener('resize', (event: Event) => {
+            this.$forceUpdate();
+        });
+    }
 }
 </script>
 
@@ -62,6 +86,8 @@ export default class DynamicImageShadow extends Vue {
     .image {
         position: absolute;
         width: 100%;
+        top: 0;
+        left: 0;
     }
 }
 </style>

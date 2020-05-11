@@ -20,4 +20,11 @@ export default class SectionCard extends Vue {}
     box-shadow: 0 16px 16px rgba(58, 138, 113, 0.4);
     background-color: white;
 }
+
+@media screen and (max-width: 779px) {
+    .card {
+        padding: 48px 16px 32px;
+        border-radius: 0;
+    }
+}
 </style>

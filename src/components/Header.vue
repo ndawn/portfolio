@@ -5,21 +5,32 @@
                 a.nav-item(href="#skills") My skills
                 a.nav-item(href="#projects") My projects
             .right-block
-                .job-badge-container
-                    span.job-badge Looking for a job!
-                .contact-icons
-                    a.contact-link(href="https://github.com/ndawn" target="_blank")
-                        img.contact-icon(:src="require('@/assets/github.svg')")
-                    a.contact-link(href="https://spb.hh.ru/resume/966231efff035889d90039ed1f466b456e426a" target="_blank")
-                        img.contact-icon(:src="require('@/assets/hh.svg')")
-                    a.contact-link(href="https://www.linkedin.com/in/maksim-burmistrov-984124164/" target="_blank")
-                        img.contact-icon(:src="require('@/assets/linkedin.svg')")
-                    a.contact-link(href="https://vk.com/burmistrovm" target="_blank")
-                        img.contact-icon(:src="require('@/assets/vk.svg')")
-                    a.contact-link(href="https://teleg.run/ndawn" target="_blank")
-                        img.contact-icon(:src="require('@/assets/telegram.svg')")
-                    a.contact-link(href="mailto:burmistrovm@live.ru" target="_blank")
-                        img.contact-icon(:src="require('@/assets/email.svg')")
+                .job-badge Looking for a job!
+                a.contact-link(href="https://github.com/ndawn" target="_blank")
+                    img.contact-icon(:src="require('@/assets/github.svg')")
+                a.contact-link(href="https://spb.hh.ru/resume/966231efff035889d90039ed1f466b456e426a" target="_blank")
+                    img.contact-icon(:src="require('@/assets/hh.svg')")
+                a.contact-link(href="https://www.linkedin.com/in/maksim-burmistrov-984124164/" target="_blank")
+                    img.contact-icon(:src="require('@/assets/linkedin.svg')")
+                a.contact-link(href="https://vk.com/burmistrovm" target="_blank")
+                    img.contact-icon(:src="require('@/assets/vk.svg')")
+                a.contact-link(href="https://teleg.run/ndawn" target="_blank")
+                    img.contact-icon(:src="require('@/assets/telegram.svg')")
+                a.contact-link(href="mailto:burmistrovm@live.ru" target="_blank")
+                    img.contact-icon(:src="require('@/assets/email.svg')")
+        .mobile
+            a.contact-link(href="https://github.com/ndawn" target="_blank")
+                img.contact-icon(:src="require('@/assets/github.svg')")
+            a.contact-link(href="https://spb.hh.ru/resume/966231efff035889d90039ed1f466b456e426a" target="_blank")
+                img.contact-icon(:src="require('@/assets/hh.svg')")
+            a.contact-link(href="https://www.linkedin.com/in/maksim-burmistrov-984124164/" target="_blank")
+                img.contact-icon(:src="require('@/assets/linkedin.svg')")
+            a.contact-link(href="https://vk.com/burmistrovm" target="_blank")
+                img.contact-icon(:src="require('@/assets/vk.svg')")
+            a.contact-link(href="https://teleg.run/ndawn" target="_blank")
+                img.contact-icon(:src="require('@/assets/telegram.svg')")
+            a.contact-link(href="mailto:burmistrovm@live.ru" target="_blank")
+                img.contact-icon(:src="require('@/assets/email.svg')")
 </template>
 
 <script lang="ts">
@@ -33,7 +44,13 @@ import SectionContainer from '@/components/SectionContainer.vue'
         SectionContainer
     }
 })
-export default class Header extends Vue {}
+export default class Header extends Vue {
+    mobileMenuActive: boolean = false;
+
+    toggleMenu () {
+        this.mobileMenuActive = !this.mobileMenuActive;
+    }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -64,43 +81,67 @@ export default class Header extends Vue {}
     }
 
     .right-block {
-        display: inline-block;
+        display: inline-flex;
         float: right;
         height: 100%;
+        align-items: center;
     }
 
-    .job-badge-container {
-        display: inline-block;
+    .job-badge {
         margin: 0 32px;
-        vertical-align: top;
-        line-height: 96px;
+        padding: 0 16px;
+        height: 32px;
+        line-height: 32px;
+        white-space: nowrap;
+        border-radius: 24px;
+        box-shadow: 0 8px 16px rgba(58, 138, 113, 0.6);
+        background: white;
+    }
 
-        .job-badge {
-            padding: 4px 16px;
-            border-radius: 24px;
-            background: white;
+    .contact-link {
+        display: block;
+        margin: 0 12px;
+        height: 32px;
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+
+        .contact-icon {
+            width: 32px;
+            line-height: 96px;
+            opacity: 0.7;
+            transition: opacity 0.2s ease, fill 0.2s ease;
+
+            &:hover {
+                opacity: 1;
+            }
         }
     }
 
-    .contact-icons {
-        display: inline-flex;
-        height: 100%;
+    .mobile {
+        display: none;
+        position: absolute;
+        width: 100%;
+        height: 64px;
         align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.1);
 
         .contact-link {
-            display: inline-block;
-            margin: 0 12px;
+            margin: 4px;
+            width: 36px;
+        }
 
-            .contact-icon {
-                width: 32px;
-                line-height: 96px;
-                opacity: 0.7;
-                transition: opacity 0.2s ease, fill 0.2s ease;
-
-                &:hover {
-                    opacity: 1;
-                }
-            }
+        &:after {
+            content: 'Looking for a job!';
+            position: absolute;
+            padding: 2px 6px;
+            bottom: -50%;
+            font-size: 12px;
+            box-shadow: 0 8px 16px rgba(58, 138, 113, 0.6);
+            border-radius: 64px;
+            background: white;
         }
     }
 }
