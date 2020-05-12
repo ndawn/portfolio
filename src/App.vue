@@ -72,27 +72,6 @@ body {
     @media screen and (max-width: 959px) {
         font-size: 18px;
     }
-
-    .slide-enter-active, .slide-leave-active {
-        transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-    }
-
-    .slide-enter.next, .slide-leave-to.prev {
-        transform: translateY(100vh);
-    }
-
-    .slide-enter.none, .slide-leave-to.none {
-        opacity: 0;
-    }
-
-    .slide-enter-to, .slide-leave {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    .slide-leave-to.next, .slide-enter.prev {
-        transform: translateY(-100vh);
-    }
 }
 
 @media screen and (max-width: 959px) {

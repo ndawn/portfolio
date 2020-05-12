@@ -1,7 +1,7 @@
 <template lang="pug">
     .image-container(:class="containerClasses" :style="{height: containerHeight}")
         img.image.shadow(:src="src" :style="{...style, ...shadowStyle}" :class="imageClasses")
-        img.image(:src="src" :style="style" :class="imageClasses" :alt="alt" :ref="'img' + src")
+        img.image(:src="src" :style="style" :class="imageClasses" :alt="alt" :ref="'img' + src" @load="computeContainerHeight")
 </template>
 
 <script lang="ts">
@@ -56,7 +56,13 @@ export default class DynamicImageShadow extends Vue {
     }
 
     computeContainerHeight () {
-        this.containerHeight = `${(this.$refs['img' + this.src] as HTMLElement)?.getBoundingClientRect()?.height || 0}px`;
+        const containerHeight = (this.$refs['img' + this.src] as HTMLImageElement)?.height || 0;
+
+        if (containerHeight > 0) {
+            this.containerHeight = `${containerHeight}px`;
+        }
+
+        setTimeout(this.computeContainerHeight, 100);
     }
 
     mounted () {
